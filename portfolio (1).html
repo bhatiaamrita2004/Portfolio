@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amrita Bhatia — Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #16161f;
+    --border: #1e1e2e;
+    --accent: #7c6bff;
+    --accent2: #ff6b9d;
+    --accent3: #6bffd8;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --glow: rgba(124, 107, 255, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cabinet Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ========= NAV ========= */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ========= HERO ========= */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124, 107, 255, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 30%, rgba(255, 107, 157, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 60% 80%, rgba(107, 255, 216, 0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124, 107, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124, 107, 255, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 900px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--accent3);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 2rem;
+    background: rgba(107, 255, 216, 0.05);
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .line1 { color: var(--text); }
+  .hero h1 .line2 {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 550px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: linear-gradient(135deg, var(--accent), #9d8fff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Cabinet Grotesk', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(124, 107, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124, 107, 255, 0.4);
+  }
+
+  .btn-ghost {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Cabinet Grotesk', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-avatar {
+    position: absolute;
+    right: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 5rem;
+    font-weight: 800;
+    color: white;
+    animation: morphBlob 8s ease-in-out infinite;
+    box-shadow: 0 0 80px rgba(124, 107, 255, 0.3);
+    overflow: hidden;
+  }
+
+  .hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: inherit;
+  }
+
+  @keyframes morphBlob {
+    0%, 100% { border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%; }
+    33% { border-radius: 60% 40% 40% 60% / 40% 60% 40% 60%; }
+    66% { border-radius: 50% 50% 60% 40% / 60% 40% 50% 50%; }
+  }
+
+  /* ========= SECTION BASE ========= */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 3rem;
+    color: var(--text);
+  }
+
+  /* ========= SKILLS ========= */
+  #skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .skill-category:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(124, 107, 255, 0.1);
+    border-color: rgba(124, 107, 255, 0.3);
+  }
+
+  .skill-cat-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    color: var(--muted);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .skill-tag {
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
+  .skill-tag.lang {
+    color: var(--accent);
+    border-color: rgba(124, 107, 255, 0.3);
+    background: rgba(124, 107, 255, 0.08);
+  }
+
+  .skill-tag.web {
+    color: var(--accent2);
+    border-color: rgba(255, 107, 157, 0.3);
+    background: rgba(255, 107, 157, 0.08);
+  }
+
+  .skill-tag.tool {
+    color: var(--accent3);
+    border-color: rgba(107, 255, 216, 0.3);
+    background: rgba(107, 255, 216, 0.08);
+  }
+
+  .skill-tag:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ========= PROJECTS ========= */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    border-color: rgba(124, 107, 255, 0.25);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+
+  .project-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .project-tech span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+  }
+
+  /* ========= HACKATHON ========= */
+  #experience { background: var(--surface); }
+
+  .hackathon-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+  }
+
+  .hackathon-card::after {
+    content: '🏆';
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    font-size: 3rem;
+    opacity: 0.3;
+  }
+
+  .hackathon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: linear-gradient(135deg, rgba(255, 200, 0, 0.15), rgba(255, 150, 0, 0.1));
+    border: 1px solid rgba(255, 200, 0, 0.3);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffc84a;
+    margin-bottom: 1.5rem;
+  }
+
+  .hackathon-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .hackathon-subtitle {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .hackathon-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .hackathon-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .highlight-item {
+    background: rgba(124, 107, 255, 0.06);
+    border: 1px solid rgba(124, 107, 255, 0.15);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .highlight-item .hi-icon { font-size: 1.3rem; }
+
+  .highlight-item p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .highlight-item strong {
+    display: block;
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  /* ========= ABOUT STRIP ========= */
+  .about-strip {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .about-main {
+    flex: 1;
+    min-width: 300px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+  }
+
+  .about-main p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .stat-box .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-box .lbl {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ========= FOOTER ========= */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-links a {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+
+  .social-links a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(124, 107, 255, 0.08);
+  }
+
+  /* Animated sections */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem; padding-top: 80px; }
+    .hero-avatar { display: none; }
+    section { padding: 4rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AB<span style="color:var(--accent2)">.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <div style="font-family:'DM Mono',monospace; font-size:0.9rem; color:var(--muted); margin-bottom:0.5rem; letter-spacing:1px;">Hi, I'm</div>
+    <h1>
+      <div class="line1">Amrita</div>
+      <div class="line2">Bhatia.</div>
+    </h1>
+    <p class="hero-desc">
+      Building meaningful digital experiences — from smart platforms that connect people
+      to hardware-backed web solutions. Passionate about clean code, creative problem-solving, and hackathons.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-avatar">👨‍💻</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <div class="section-title">Who I Am</div>
+
+  <div class="about-strip reveal">
+    <div class="about-main">
+      <p>
+        I'm a passionate developer with a strong foundation in both systems programming and modern web technologies. My journey spans from low-level C/C++ to full-stack web applications using React and Node.js.
+      </p>
+      <p>
+        I love building products that solve real-world problems — whether it's a smart platform that bridges the gap between students and teachers, or a website that brings an innovative hardware product to market. I participated in the <strong style="color:var(--accent)">Herizon Hackathon</strong>, where I built the VortexLever website under pressure and shipped a complete product.
+      </p>
+      <p>
+        I believe great software is about both functionality and experience — code that works beautifully and interfaces that feel natural.
+      </p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="num">4+</div>
+        <div class="lbl">Projects Built</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">1</div>
+        <div class="lbl">Hackathon</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">11+</div>
+        <div class="lbl">Technologies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Tech Stack</div>
+  <div class="section-title">Skills & Tools</div>
+
+  <div class="skills-grid reveal">
+    <div class="skill-category">
+      <div class="skill-cat-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag lang">C</span>
+        <span class="skill-tag lang">C++</span>
+        <span class="skill-tag lang">Python</span>
+        <span class="skill-tag lang">Java</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-cat-title">Web Development</div>
+      <div class="skill-tags">
+        <span class="skill-tag web">HTML</span>
+        <span class="skill-tag web">CSS</span>
+        <span class="skill-tag web">JavaScript</span>
+        <span class="skill-tag web">React</span>
+        <span class="skill-tag web">Node.js</span>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-cat-title">CS Fundamentals & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag tool">DSA</span>
+        <span class="skill-tag tool">OpenCV</span>
+        <span class="skill-tag tool">Git</span>
+        <span class="skill-tag tool">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <div class="section-title">Featured Projects</div>
+
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-number">01 — HACKATHON PROJECT</div>
+      <div class="project-icon">🌀</div>
+      <div class="project-title">VortexLever</div>
+      <p class="project-desc">
+        A product website for a plug-and-play smart drain cover designed for hostel bathrooms. Features product showcase, size selection, customer reviews, feedback system, how-it-works section, and buy/sell functionality. Built during Herizon Hackathon.
+      </p>
+      <div class="project-tech">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>E-commerce</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-number">02 — WEB PLATFORM</div>
+      <div class="project-icon">🎓</div>
+      <div class="project-title">EduConnector</div>
+      <p class="project-desc">
+        A smart digital platform enabling efficient interaction between students and teachers. Manages appointments, availability queues, and real-time communication. Reduces friction in academic scheduling and streamlines teacher-student coordination.
+      </p>
+      <div class="project-tech">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>Real-time</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-number">03 — CLONE PROJECT</div>
+      <div class="project-icon">🎵</div>
+      <div class="project-title">Spotify Clone</div>
+      <p class="project-desc">
+        A fully responsive Spotify clone replicating the UI and core functionalities of the music streaming platform. Features music player controls, playlist views, sidebar navigation, and pixel-perfect design fidelity.
+      </p>
+      <div class="project-tech">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>Responsive</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-number">04 — AI/ML PROJECT</div>
+      <div class="project-icon">👁️</div>
+      <div class="project-title">Face Detection System</div>
+      <p class="project-desc">
+        A real-time face detection application using OpenCV and Python. Implements computer vision techniques to detect and track faces in live video streams and images with high accuracy and performance.
+      </p>
+      <div class="project-tech">
+        <span>Python</span>
+        <span>OpenCV</span>
+        <span>Computer Vision</span>
+        <span>ML</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE / HACKATHON -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <div class="section-title">Hackathon & Activities</div>
+
+  <div class="hackathon-card reveal">
+    <div class="hackathon-badge">🏆 Hackathon Participant</div>
+    <div class="hackathon-title">Herizon Hackathon</div>
+    <div class="hackathon-subtitle">Built VortexLever — Smart Drain Cover Solution</div>
+    <p class="hackathon-desc">
+      Participated in the Herizon Hackathon where I conceptualized and developed the complete web presence for <strong>VortexLever</strong> — a hardware startup idea solving a real hygiene problem in hostel facilities. The solution is a plug-and-play smart drain cover that requires no structural changes or electricity, installs in seconds, and automatically prevents hair and waste from clogging drains.
+      <br><br>
+      I was responsible for designing and developing the product website, including product pages, size selection, review & feedback system, how-it-works walkthrough, and buy/sell interface — all built under hackathon time pressure.
+    </p>
+    <div class="hackathon-highlights">
+      <div class="highlight-item">
+        <span class="hi-icon">⚡</span>
+        <div>
+          <strong>Plug & Play</strong>
+          <p>No structural changes or electricity needed</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="hi-icon">🧹</span>
+        <div>
+          <strong>Easy Maintenance</strong>
+          <p>Removable collection pod for quick cleaning</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="hi-icon">📐</span>
+        <div>
+          <strong>Scalable</strong>
+          <p>Deployable across multiple hostel facilities</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <span class="hi-icon">💰</span>
+        <div>
+          <strong>Cost Effective</strong>
+          <p>Reduces plumbing costs & maintenance effort</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background: var(--surface);">
+  <div class="section-label">Contact</div>
+  <div class="section-title">Let's Connect</div>
+
+  <div class="reveal" style="max-width:600px;">
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:20px; padding:2.5rem;">
+      <p style="color:var(--muted); line-height:1.8; margin-bottom:2rem; font-size:1rem;">
+        I'm open to internship opportunities, collaborative projects, and full-time roles.
+        Whether you have a project idea or just want to say hi — my inbox is always open.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="display:flex; align-items:center; gap:1rem; padding:1rem 1.2rem; background:rgba(124,107,255,0.06); border:1px solid rgba(124,107,255,0.15); border-radius:10px;">
+          <span style="font-size:1.3rem;">📧</span>
+          <div>
+            <div style="font-size:0.75rem; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:2px;">EMAIL</div>
+            <div style="font-size:0.95rem; font-weight:600; color:var(--text);">Add your email here</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem; padding:1rem 1.2rem; background:rgba(107,255,216,0.05); border:1px solid rgba(107,255,216,0.15); border-radius:10px;">
+          <span style="font-size:1.3rem;">💼</span>
+          <div>
+            <div style="font-size:0.75rem; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:2px;">LINKEDIN</div>
+            <div style="font-size:0.95rem; font-weight:600; color:var(--text);">Add your LinkedIn here</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:1rem; padding:1rem 1.2rem; background:rgba(255,107,157,0.05); border:1px solid rgba(255,107,157,0.15); border-radius:10px;">
+          <span style="font-size:1.3rem;">🐙</span>
+          <div>
+            <div style="font-size:0.75rem; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:2px;">GITHUB</div>
+            <div style="font-size:0.95rem; font-weight:600; color:var(--text);">Add your GitHub here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 — Built with ❤️ and a lot of ☕</p>
+  <p style="font-family:'DM Mono',monospace; font-size:0.75rem;">C · C++ · Python · Java · HTML · CSS · JS · React · Node.js</p>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
